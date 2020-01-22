@@ -3,6 +3,8 @@
 const MySql = require("sync-mysql");
 
 class DatabaseManager {
+  constructor() {}
+
   instance = null;
 
   getInstance() {
@@ -25,4 +27,6 @@ class DatabaseManager {
   }
 }
 
-module.exports = DatabaseManager;
+// const db = new DatabaseManager();
+
+module.exports = { DatabaseManager };
