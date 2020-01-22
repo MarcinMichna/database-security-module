@@ -1,14 +1,22 @@
-var MySql = require('sync-mysql');
-
 const { DatabaseManager } = require("./../DatabaseManager");
 const connection = DatabaseManager.getInstance().getConnection();
 
-const acl = connection.query('SELECT * FROM acl');
-const role_tree = connection.query('SELECT * FROM role_tree');
-const acl_table_permission = connection.query('SELECT * FROM acl_table_permission');
-const roles = connection.query('SELECT * FROM roles');
-const table_names = connection.query('SELECT * FROM table_names');
+class PermissionResolver {
+    constructor (role, query_type) {
+        this.role = role;
+        this.query_type = query_type;
 
+        const acl = connection.query('SELECT * FROM acl');
+        const role_tree = connection.query('SELECT * FROM role_tree');
+        const acl_table_permission = connection.query('SELECT * FROM acl_table_permission');
+        const roles = connection.query('SELECT * FROM roles');
+        const table_names = connection.query('SELECT * FROM table_names');
+    }
+
+    getPermissions() {
+        return null;
+    }
+}
 
 function getRoleId(role, roles) {
     for (let i = 0; i < roles.length; i++) {
@@ -157,4 +165,4 @@ let tables_ids = getInsertableTables(roles_ids, acl_table_permission);
 let result = replaceTableid(join_(getIntersection(getForbiddenRows(roles_ids, acl, "SELECT"))));
 console.log(result);
 
-console.log(replaceTableid(getIntersection([ [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 7, 1 ],[3,2] ] ])));
+// console.log(replaceTableid(getIntersection([ [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 7, 1 ],[3,2] ] ]))); // debug
