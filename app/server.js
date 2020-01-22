@@ -1,9 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const MySql = require("sync-mysql");
 
-const { prepareQuery } = require("./../security-module/aspect");
-const { DatabaseManager } = require("./../security-module/DatabaseManager");
+const { prepareQuery, DatabaseManager, securityInit} = require("./../security-module/SecurityModule");
 
 const port = process.env.PORT || 3000;
 
@@ -14,12 +12,16 @@ app.use(bodyParser.json());
 // aspect example
 console.log(prepareQuery("select * from roles"));
 
-// initialize singleton
-const db = new DatabaseManager();
+securityInit({
+  host: "michnamarcin.pl",
+  user: "DPuser",
+  password: "polska1",
+  database: "DPbase"
+});
+
 
 app.get("/something", (req, res, next) => {
-  const dbInstance = db.getInstance();
-  const con = dbInstance.getConnection();
+  const con = DatabaseManager.getInstance().getConnection();
 
   const response = con.query(prepareQuery("select * from roles"));
   console.log(response);

@@ -1,29 +1,25 @@
 // Singleton class
-
 const MySql = require("sync-mysql");
 
+let instance = null;
+
 class DatabaseManager {
-  constructor() {}
-
-  instance = null;
-
-  getInstance() {
-    if (this.instance === null) {
-      this.instance = new DatabaseManager();
-    }
-
-    return this.instance;
+  constructor( ) {
+    this.config = null;
   }
 
-  getConnection() {
-    const connection = new MySql({
-      host: "michnamarcin.pl",
-      user: "DPuser",
-      password: "polska1",
-      database: "DPbase"
-    });
+  static getInstance() {
+    if (instance === null) {
+      instance = new DatabaseManager();
+    }
 
-    return connection;
+    return instance;
+  }
+
+  setConfig(conf) {this.config = conf}
+
+  getConnection() {
+    return new MySql(this.config);
   }
 }
 
