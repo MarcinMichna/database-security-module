@@ -1,11 +1,7 @@
 var MySql = require('sync-mysql');
 
-var connection = new MySql({
-    host: 'michnamarcin.pl',
-    user: 'DPuser',
-    password: 'polska1',
-    database: 'DPbase'
-});
+const { DatabaseManager } = require("./../DatabaseManager");
+const connection = DatabaseManager.getInstance().getConnection();
 
 const acl = connection.query('SELECT * FROM acl');
 const role_tree = connection.query('SELECT * FROM role_tree');
@@ -158,8 +154,7 @@ function replaceTableid(array) {
 
 let roles_ids = buildTree([getRoleId("admin", roles)], role_tree);
 let tables_ids = getInsertableTables(roles_ids, acl_table_permission);
-let result = join_(getIntersection(getForbiddenRows(roles_ids, acl, "SELECT")));
-console.log(getIntersection(result));
+let result = replaceTableid(join_(getIntersection(getForbiddenRows(roles_ids, acl, "SELECT"))));
+console.log(result);
 
 console.log(replaceTableid(getIntersection([ [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 7, 1 ],[3,2] ] ])));
-console.log(result);
