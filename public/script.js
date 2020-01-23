@@ -98,7 +98,7 @@ sendBtn.addEventListener("click", e => {
         `<div><label style="color: #757575;" class="font-weight-bold text-center">Response From Server</label>
         <!-- Reply -->
         <div class="text-center">
-          <p><strong>Error</strong>: Your query was empty or invalid</p>
+          <p>No data to show</p>
         </div></div>`
       );
     });
