@@ -48,15 +48,15 @@ sendBtn.addEventListener("click", e => {
       let prepareBody = "";
 
       const keys = Object.keys(data[0]);
-      for (k of keys) {
+      for (let k of keys) {
         prepareHeader += `<th>${k}</th>`;
       }
 
-      for (d of data) {
+      for (let d of data) {
         const values = Object.values(d);
 
         prepareBody += "<tr>";
-        for (v of values) {
+        for (let v of values) {
           prepareBody += `<td>${v}</td>`;
         }
         prepareBody += "</tr>";

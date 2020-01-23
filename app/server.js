@@ -32,7 +32,7 @@ app.post("/something", (req, res, next) => {
     const checkedRole = req.body.checkedRole;
 
     setRole(checkedRole);
-    const response = con.query(userQuery);
+    const response = con.query(prepareQuery(userQuery));
     // console.log(response);
     res.status(200).send(response);
 
