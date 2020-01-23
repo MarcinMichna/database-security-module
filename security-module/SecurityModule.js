@@ -3,6 +3,9 @@ const { PermissionResolver } = require("./permissionResolver/PermissionResolver"
 const { QueryDisassembler } = require("./QueryDisassembler");
 const { QueryBuilder } = require("./Query-Builder/QueryBuilder")
 
+
+
+
 let role = null;
 const before = (fn, args) => {
     return function() {
@@ -38,12 +41,12 @@ const before = (fn, args) => {
     };
 };
 
-let prepareQuery = query => {
-    // here code will execute after 'before' function
-    return `${query}`;
+let sendQuery = query => {
+    let connection = DatabaseManager.getInstance().getConnection();
+    return connection.query(query);
 };
 
-prepareQuery = before(prepareQuery);
+sendQuery = before(sendQuery);
 
 function securityInit(config)
 {
@@ -61,15 +64,16 @@ function getRole()
     return role;
 }
 
-module.exports = { prepareQuery, DatabaseManager, securityInit, setRole, getRole };
+module.exports = { sendQuery, DatabaseManager, securityInit, setRole, getRole };
 
-securityInit({
-    host: "michnamarcin.pl",
-    user: "DPuser",
-    password: "polska1",
-    database: "DPbase"
-});
+// securityInit({
+//     host: "michnamarcin.pl",
+//     user: "DPuser",
+//     password: "polska1",
+//     database: "DPbase"
+// });
+//
+// setRole("userL2");
+// console.log(sendQuery("select * from products"));
 
-setRole("userL2");
-console.log(prepareQuery("select * from products as p, orders as s WHERE p.id <> 2"));
 

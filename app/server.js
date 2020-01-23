@@ -3,7 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 const {
-  prepareQuery,
+  sendQuery,
   DatabaseManager,
   securityInit,
   setRole
@@ -27,19 +27,12 @@ securityInit({
 
 app.post("/something", (req, res, next) => {
   try {
-    const con = DatabaseManager.getInstance().getConnection();
     const userQuery = req.body.userQuery;
     const checkedRole = req.body.checkedRole;
 
     setRole(checkedRole);
-    const response = con.query(prepareQuery(userQuery));
-    // console.log(response);
+    const response = sendQuery(userQuery);
     res.status(200).send(response);
-
-    // setRole("admin");
-    // const response = con.query(prepareQuery("select * from roles"));
-    // console.log(response);
-    // res.send(response);
   } catch (err) {
     throw new Error(err);
   }
