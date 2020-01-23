@@ -4,7 +4,7 @@ const MySql = require("sync-mysql");
 let instance = null;
 
 class DatabaseManager {
-  constructor( ) {
+  constructor() {
     this.config = null;
   }
 
@@ -16,7 +16,9 @@ class DatabaseManager {
     return instance;
   }
 
-  setConfig(conf) {this.config = conf}
+  setConfig(conf) {
+    this.config = conf;
+  }
 
   getConnection() {
     return new MySql(this.config);
