@@ -20,8 +20,16 @@ class QueryDisassembler
 
         let fromIndex = splittedQuery.indexOf("FROM");
         let whereIndex = splittedQuery.indexOf("WHERE");
+        let tablesWithAliases = [];
+        if (whereIndex === -1)
+        {
+            tablesWithAliases  = splittedQuery.slice(fromIndex + 1, splittedQuery.length);
+        }
+        else
+        {
+            tablesWithAliases = splittedQuery.slice(fromIndex + 1, whereIndex);
+        }
 
-        let tablesWithAliases = splittedQuery.slice(fromIndex + 1, whereIndex);
         let tablesRaw = tablesWithAliases.join(" ");
         let tablesRawSplitted = tablesRaw.split(", ");
 
@@ -47,3 +55,4 @@ class QueryDisassembler
 }
 
 module.exports = {QueryDisassembler};
+

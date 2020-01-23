@@ -17,7 +17,7 @@ const before = (fn, args) => {
         // resolving raw permissions
         let permissions = new PermissionResolver(role, queryDisassembler.getType()).getPermissions();
 
-        console.log(permissions);
+
         let usedTables = queryDisassembler.getTables();
         let permissionsFiltered = [];
         for(let p of permissions)
@@ -27,7 +27,6 @@ const before = (fn, args) => {
                 permissionsFiltered.push(p);
             }
         }
-
         // modifying query
         let queryBuilder = new QueryBuilder(queryStr);
 
@@ -35,8 +34,7 @@ const before = (fn, args) => {
         for(let perm of permissionsFiltered) {queryBuilder.withPermission(perm[1], perm[0]);}
 
 
-
-        return fn.call(this, queryBuilder.build());
+        return fn.call(this, queryBuilder.build().query);
     };
 };
 
@@ -73,4 +71,5 @@ securityInit({
 });
 
 setRole("userL2");
-prepareQuery("select * from roles");
+console.log(prepareQuery("select * from products as p, orders as s WHERE p.id <> 2"));
+
