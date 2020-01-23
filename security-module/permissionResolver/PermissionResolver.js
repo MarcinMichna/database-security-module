@@ -157,7 +157,7 @@ class PermissionResolver {
     getPermissions() {
         let roles_ids = this.buildTree([this.getRoleId()]);
         if (this.query_type === "INSERT") return this.getInsertableTables(roles_ids);
-        return this.replaceTableid(this.join_(this.getIntersection(this.getForbiddenRows(roles_ids))));
+        return this.replaceTableid(this.getIntersection(this.getForbiddenRows(roles_ids)));
     }
 
 }
