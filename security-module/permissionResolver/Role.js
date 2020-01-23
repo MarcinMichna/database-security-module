@@ -35,7 +35,7 @@ class Role {
     getChildren() {
         let result = [];
         for (let i = 0; i < AclData.role_tree.length; i++) {
-            if (AclData.role_tree[i].parentid === this.role_id[i]) {
+            if (AclData.role_tree[i].parentid === this.role_id) {
                 result.push(new Role(this.getRoleName(AclData.role_tree[i].child)));
             }
         }
