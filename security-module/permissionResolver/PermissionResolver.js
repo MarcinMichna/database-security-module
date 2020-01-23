@@ -147,7 +147,7 @@ class PermissionResolver {
 
         for (let i = 0; i < array.length; i++) {
             let row = array[i][0];
-            let table_name = this.getTableName(array[i][1], table_names);
+            let table_name = this.getTableName(array[i][1], this.table_names);
             result.push([row, table_name]);
         }
 
