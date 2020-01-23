@@ -23,7 +23,8 @@ sendBtn.addEventListener("click", e => {
   const userQuery = getUserQuery();
   const checkedRole = getCheckedRole();
 
-  fetch("http://localhost:3000/something", {
+  // fetch("http://localhost:3000/something", {
+  fetch("/something", {
     method: "post",
     headers: {
       Accept: "application/json",
