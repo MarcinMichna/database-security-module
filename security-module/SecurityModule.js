@@ -14,12 +14,27 @@ const before = (fn, args) => {
         // query information
         let queryDisassembler = new QueryDisassembler(queryStr);
 
-        // resolving permissions
-        let permissions = PermissionResolver(role, queryDisassembler.getType());
+        // resolving raw permissions
+        let permissions = new PermissionResolver(role, queryDisassembler.getType()).getPermissions();
+
+        console.log(permissions);
+        let usedTables = queryDisassembler.getTables();
+        let permissionsFiltered = [];
+        for(let p of permissions)
+        {
+            if (usedTables.includes(p[1].toUpperCase()))
+            {
+                permissionsFiltered.push(p);
+            }
+        }
 
         // modifying query
         let queryBuilder = new QueryBuilder(queryStr);
-        for(let perm of permissions) {queryBuilder.withPermission(perm[1], perm[0]);}
+
+
+        for(let perm of permissionsFiltered) {queryBuilder.withPermission(perm[1], perm[0]);}
+
+
 
         return fn.call(this, queryBuilder.build());
     };
@@ -50,5 +65,12 @@ function getRole()
 
 module.exports = { prepareQuery, DatabaseManager, securityInit, setRole, getRole };
 
-setRole("admin");
+securityInit({
+    host: "michnamarcin.pl",
+    user: "DPuser",
+    password: "polska1",
+    database: "DPbase"
+});
+
+setRole("userL2");
 prepareQuery("select * from roles");
