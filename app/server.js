@@ -1,16 +1,22 @@
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 
-const { prepareQuery, DatabaseManager, securityInit, setRole} = require("./../security-module/SecurityModule");
+const {
+  prepareQuery,
+  DatabaseManager,
+  securityInit,
+  setRole
+} = require("./../security-module/SecurityModule");
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // aspect example
-console.log(prepareQuery("select * from roles"));
+// console.log(prepareQuery("select * from roles"));
 
 securityInit({
   host: "michnamarcin.pl",
@@ -19,14 +25,24 @@ securityInit({
   database: "DPbase"
 });
 
+app.post("/something", (req, res, next) => {
+  try {
+    const con = DatabaseManager.getInstance().getConnection();
+    const userQuery = req.body.userQuery;
+    const checkedRole = req.body.checkedRole;
 
-app.get("/something", (req, res, next) => {
-  const con = DatabaseManager.getInstance().getConnection();
+    setRole(checkedRole);
+    const response = con.query(userQuery);
+    // console.log(response);
+    res.status(200).send(response);
 
-  setRole("admin");
-  const response = con.query(prepareQuery("select * from roles"));
-  console.log(response);
-  res.send(response);
+    // setRole("admin");
+    // const response = con.query(prepareQuery("select * from roles"));
+    // console.log(response);
+    // res.send(response);
+  } catch (err) {
+    throw new Error(err);
+  }
 });
 
 app.listen(port, () => {
