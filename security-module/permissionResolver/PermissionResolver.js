@@ -21,10 +21,10 @@ class PermissionResolver {
         }
     }
 
-    getTableName(tableid, table_names) {
-        for (let i = 0; i < table_names.length; i++) {
-            if (table_names[i].id === tableid) {
-                return table_names[i].names;
+    getTableName(tableid) {
+        for (let i = 0; i < this.table_names.length; i++) {
+            if (this.table_names[i].id === tableid) {
+                return this.table_names[i].names;
             }
         }
     }
@@ -147,7 +147,7 @@ class PermissionResolver {
 
         for (let i = 0; i < array.length; i++) {
             let row = array[i][0];
-            let table_name = this.getTableName(array[i][1], this.table_names);
+            let table_name = this.getTableName(array[i][1]);
             result.push([row, table_name]);
         }
 
