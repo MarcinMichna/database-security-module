@@ -6,11 +6,11 @@ class PermissionResolver {
         this.role = role;
         this.query_type = query_type;
 
-        const acl = connection.query('SELECT * FROM acl');
-        const role_tree = connection.query('SELECT * FROM role_tree');
-        const acl_table_permission = connection.query('SELECT * FROM acl_table_permission');
-        const roles = connection.query('SELECT * FROM roles');
-        const table_names = connection.query('SELECT * FROM table_names');
+        this.acl = connection.query('SELECT * FROM acl');
+        this.role_tree = connection.query('SELECT * FROM role_tree');
+        this.acl_table_permission = connection.query('SELECT * FROM acl_table_permission');
+        this.roles = connection.query('SELECT * FROM roles');
+        this.table_names = connection.query('SELECT * FROM table_names');
     }
 
     getRoleId(role, roles) {
@@ -44,7 +44,7 @@ class PermissionResolver {
             return roles_ids;
         }
 
-        return result.concat(getChildren(result, role_tree));
+        return result.concat(this.getChildren(result, role_tree));
     }
 
     uniq(array) {
@@ -56,7 +56,7 @@ class PermissionResolver {
     }
 
     buildTree(roles_ids, role_tree) {
-        return uniq(getChildren(roles_ids, role_tree)).sort(); // sort only for debug purposes
+        return this.uniq(this.getChildren(roles_ids, role_tree)).sort(); // sort only for debug purposes
     }
 
     getInsertableTables(roles_ids, acl_table_permission) {
@@ -70,7 +70,7 @@ class PermissionResolver {
             }
         }
 
-        return uniq(result).sort(); // sort only for debug purposes
+        return this.uniq(result).sort(); // sort only for debug purposes
     }
 
     getForbiddenRows(roles_ids, acl, type) {
@@ -97,13 +97,13 @@ class PermissionResolver {
     }
 
     getIntersection(array) {
-        let tmp = uniq(join_(array));
+        let tmp = this.uniq(this.join_(array));
         let result = [];
 
         for (let i = 0; i < tmp.length; i++) {
             let warden = true;
             for (let j = 0; j < array.length; j++) {
-                if (!isMember(array[j], tmp[i])) {
+                if (!this.isMember(array[j], tmp[i])) {
                     warden = false;
                     break;
                 }
@@ -147,7 +147,7 @@ class PermissionResolver {
 
         for (let i = 0; i < array.length; i++) {
             let row = array[i][0];
-            let table_name = getTableName(array[i][1], table_names);
+            let table_name = this.getTableName(array[i][1], table_names);
             result.push([row, table_name]);
         }
 
@@ -155,14 +155,9 @@ class PermissionResolver {
     }
 
     getPermissions() {
-        return null;
+        let roles_ids = this.buildTree([this.getRoleId(this.role, this.roles)], this.role_tree);
+        if (this.query_type === "INSERT") return this.getInsertableTables(roles_ids, this.acl_table_permission);
+        return this.replaceTableid(this.join_(this.getIntersection(this.getForbiddenRows(roles_ids, this.acl, this.query_type))));
     }
+
 }
-
-
-// let roles_ids = buildTree([getRoleId("admin", roles)], role_tree);
-// let tables_ids = getInsertableTables(roles_ids, acl_table_permission);
-// let result = replaceTableid(join_(getIntersection(getForbiddenRows(roles_ids, acl, "SELECT"))));
-// console.log(result);
-
-// console.log(replaceTableid(getIntersection([ [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 3, 2 ] ], [[3,2]], [ [ 7, 1 ],[3,2] ] ]))); // debug
