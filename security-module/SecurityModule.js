@@ -63,13 +63,13 @@ function getRole()
 
 module.exports = { prepareQuery, DatabaseManager, securityInit, setRole, getRole };
 
-securityInit({
-    host: "michnamarcin.pl",
-    user: "DPuser",
-    password: "polska1",
-    database: "DPbase"
-});
-
-setRole("userL2");
-console.log(prepareQuery("select * from products as p, orders as s WHERE p.id <> 2"));
+// securityInit({
+//     host: "michnamarcin.pl",
+//     user: "DPuser",
+//     password: "polska1",
+//     database: "DPbase"
+// });
+//
+// setRole("userL2");
+// console.log(prepareQuery("select * from products as p, orders as s WHERE p.id <> 2"));
 
