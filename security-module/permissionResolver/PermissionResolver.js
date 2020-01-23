@@ -1,22 +1,22 @@
 const { DatabaseManager } = require("./../DatabaseManager");
-const connection = DatabaseManager.getInstance().getConnection();
 
 class PermissionResolver {
     constructor (role, query_type) {
         this.role = role;
         this.query_type = query_type;
 
-        this.acl = connection.query('SELECT * FROM acl');
-        this.role_tree = connection.query('SELECT * FROM role_tree');
-        this.acl_table_permission = connection.query('SELECT * FROM acl_table_permission');
-        this.roles = connection.query('SELECT * FROM roles');
-        this.table_names = connection.query('SELECT * FROM table_names');
+        this.connection = DatabaseManager.getInstance().getConnection();
+        this.acl = this.connection.query('SELECT * FROM acl');
+        this.role_tree = this.connection.query('SELECT * FROM role_tree');
+        this.acl_table_permission = this.connection.query('SELECT * FROM acl_table_permission');
+        this.roles = this.connection.query('SELECT * FROM roles');
+        this.table_names = this.connection.query('SELECT * FROM table_names');
     }
 
-    getRoleId(role, roles) {
-        for (let i = 0; i < roles.length; i++) {
-            if (roles[i].name === role) {
-                return roles[i].id;
+    getRoleId() {
+        for (let i = 0; i < this.roles.length; i++) {
+            if (this.roles[i].name === this.role) {
+                return this.roles[i].id;
             }
         }
     }
@@ -29,13 +29,13 @@ class PermissionResolver {
         }
     }
 
-    getChildren(roles_ids, role_tree) {
+    getChildren(roles_ids) {
         let result = [];
 
         for (let i = 0; i < roles_ids.length; i++) {
-            for (let j = 0; j < role_tree.length; j++) {
-                if (role_tree[j].parentid === roles_ids[i]) {
-                    result.push(role_tree[j].child);
+            for (let j = 0; j < this.role_tree.length; j++) {
+                if (this.role_tree[j].parentid === roles_ids[i]) {
+                    result.push(this.role_tree[j].child);
                 }
             }
         }
@@ -44,7 +44,7 @@ class PermissionResolver {
             return roles_ids;
         }
 
-        return result.concat(this.getChildren(result, role_tree));
+        return result.concat(this.getChildren(result));
     }
 
     uniq(array) {
@@ -55,17 +55,17 @@ class PermissionResolver {
         });
     }
 
-    buildTree(roles_ids, role_tree) {
-        return this.uniq(this.getChildren(roles_ids, role_tree)).sort(); // sort only for debug purposes
+    buildTree(roles_ids) {
+        return this.uniq(this.getChildren(roles_ids)).sort(); // sort only for debug purposes
     }
 
-    getInsertableTables(roles_ids, acl_table_permission) {
+    getInsertableTables(roles_ids) {
         let result = [];
 
-        for (let i = 0; i < acl_table_permission.length; i++) {
+        for (let i = 0; i < this.acl_table_permission.length; i++) {
             for (let j = 0; j < roles_ids.length; j++) {
-                if (acl_table_permission[i].idrole === roles_ids[j]) {
-                    result.push(acl_table_permission[i].idtable);
+                if (this.acl_table_permission[i].idrole === roles_ids[j]) {
+                    result.push(this.acl_table_permission[i].idtable);
                 }
             }
         }
@@ -73,19 +73,19 @@ class PermissionResolver {
         return this.uniq(result).sort(); // sort only for debug purposes
     }
 
-    getForbiddenRows(roles_ids, acl, type) {
+    getForbiddenRows(roles_ids) {
         let result = [];
 
         for (let i = 0; i < roles_ids.length; i++) {
             let tmp = [];
-            for (let j = 0; j < acl.length; j++) {
-                if (type === "SELECT") {
-                    if (roles_ids[i] === acl[j].idrole && acl[j].read === 1) {
-                        tmp.push([acl[j].idrow, acl[j].idtable]);
+            for (let j = 0; j < this.acl.length; j++) {
+                if (this.query_type === "SELECT") {
+                    if (roles_ids[i] === this.acl[j].idrole && this.acl[j].read === 1) {
+                        tmp.push([this.acl[j].idrow, this.acl[j].idtable]);
                     }
-                } else if (type === "UPDATE" || type === "DELETE") {
-                    if (roles_ids[i] === acl[j].idrole && acl[j].update === 1) {
-                        tmp.push([acl[j].idrow, acl[j].idtable]);
+                } else if (this.query_type === "UPDATE" || this.query_type === "DELETE") {
+                    if (roles_ids[i] === this.acl[j].idrole && this.acl[j].update === 1) {
+                        tmp.push([this.acl[j].idrow, this.acl[j].idtable]);
                     }
                 }
 
@@ -155,9 +155,9 @@ class PermissionResolver {
     }
 
     getPermissions() {
-        let roles_ids = this.buildTree([this.getRoleId(this.role, this.roles)], this.role_tree);
-        if (this.query_type === "INSERT") return this.getInsertableTables(roles_ids, this.acl_table_permission);
-        return this.replaceTableid(this.join_(this.getIntersection(this.getForbiddenRows(roles_ids, this.acl, this.query_type))));
+        let roles_ids = this.buildTree([this.getRoleId()]);
+        if (this.query_type === "INSERT") return this.getInsertableTables(roles_ids);
+        return this.replaceTableid(this.join_(this.getIntersection(this.getForbiddenRows(roles_ids))));
     }
 
 }
