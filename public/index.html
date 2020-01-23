@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/ogor.jpg" />
+
+    <style>
+      table,
+      th,
+      td {
+        /* border-radius: 5px; */
+        /* width: 50%; */
+        margin: 0px auto;
+        float: none;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+      }
+      .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #5bc0de;
+        width: 120px;
+        height: 120px;
+        margin: 0px auto;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+      }
+
+      /* Safari */
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <title>Ogorkowa</title>
+  </head>
+  <body>
+    <!-- <h2>Sample Form</h2>
+
+    <form>
+      Query:<br />
+      <br />
+      <input type="text" name="firstname" value="select * from" />
+      <br />
+      <br />
+      Role:<br />
+      <br />
+      <br />
+      <select>
+        <option>Admin</option>
+        <option>User</option>
+      </select>
+      <br /><br />
+      If query type is insert then define permissions:
+      <br />
+      <br />
+      <input type="text" value="" />
+      <br />
+      <br />
+      <input type="submit" value="Submit" />
+    </form> -->
+
+    <!-- Form  -->
+
+    <div class="card" style="width: 80%;">
+      <h5 class="card-header bg-info info-color text-white text-center py-4">
+        <strong>App</strong>
+      </h5>
+
+      <!--Card content-->
+      <div class="card-body px-lg-5 pt-0" style="margin-top: 2%;">
+        <!-- Form -->
+        <form class="text-center" style="color: #757575;" action="#!">
+          <label class="font-weight-bold">Query</label>
+          <!-- Query -->
+          <div class="md-form">
+            <input
+              type="text"
+              class="form-control"
+              name="query"
+              id="userQuery"
+              placeholder="select * from"
+            />
+          </div>
+
+          <!-- Role -->
+          <!--          <div class="font-weight-bold" style="margin-top: 2%;">Role</div>-->
+          <!--          <select class="mdb-select">-->
+          <!--            <option value="" disabled>Choose option</option>-->
+          <!--            <option value="1" selected>Admin</option>-->
+          <!--            <option value="2">ModeratorL1</option>-->
+          <!--            <option value="3">ModeratorL2</option>-->
+          <!--            <option value="4">ModeratorL21</option>-->
+          <!--            <option value="5">ModeratorL22</option>-->
+          <!--            <option value="6">ModeratorL31</option>-->
+          <!--            <option value="7">ModeratorL32</option>-->
+          <!--            <option value="8">UserL1</option>-->
+          <!--            <option value="8">UserL2</option>-->
+
+          <!--          </select>-->
+          <br />
+          <label class="font-weight-bold">Role</label>
+          <div id="radio-wrapper">
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="admin"
+                name="groupOfDefaultRadios"
+                value="Admin"
+              />
+              <label class="custom-control-label" for="admin">Admin</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatorL1"
+                name="groupOfDefaultRadios"
+                value="ModeratorL1"
+              />
+              <label class="custom-control-label" for="moderatorL1"
+                >ModeratorL1</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatorL2"
+                name="groupOfDefaultRadios"
+                value="ModeratorL2"
+              />
+              <label class="custom-control-label" for="moderatorL2"
+                >ModeratorL2</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatorL21"
+                name="groupOfDefaultRadios"
+                value="ModeratorL21"
+              />
+              <label class="custom-control-label" for="moderatorL21"
+                >ModeratorL21</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatatorL22"
+                name="groupOfDefaultRadios"
+                value="ModeratorL22"
+                checked
+              />
+              <label class="custom-control-label" for="moderatatorL22"
+                >ModeratorL22</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatorL31"
+                name="groupOfDefaultRadios"
+                value="ModeratorL31"
+              />
+              <label class="custom-control-label" for="moderatorL31"
+                >ModeratorL31</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="moderatorL32"
+                name="groupOfDefaultRadios"
+                value="ModeratorL32"
+              />
+              <label class="custom-control-label" for="moderatorL32"
+                >ModeratorL32</label
+              >
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="userL1"
+                name="groupOfDefaultRadios"
+                value="UserL1"
+              />
+              <label class="custom-control-label" for="userL1">UserL1</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input
+                type="radio"
+                class="custom-control-input"
+                id="userL2"
+                name="groupOfDefaultRadios"
+                value="UserL2"
+              />
+              <label class="custom-control-label" for="userL2">UserL2</label>
+            </div>
+          </div>
+
+          <br />
+
+          <!-- Send button -->
+          <button
+            class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect"
+            type="submit"
+            id="submitBtn"
+          >
+            Send
+          </button>
+        </form>
+        <!-- Form -->
+      </div>
+    </div>
+    <!-- Form -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
