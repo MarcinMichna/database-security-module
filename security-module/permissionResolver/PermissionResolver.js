@@ -161,3 +161,5 @@ class PermissionResolver {
     }
 
 }
+
+module.exports = {PermissionResolver};
