@@ -159,6 +159,7 @@ class PermissionResolver {
     }
 }
 
+module.exports = { PermissionResolver };
 
 // let roles_ids = buildTree([getRoleId("admin", roles)], role_tree);
 // let tables_ids = getInsertableTables(roles_ids, acl_table_permission);

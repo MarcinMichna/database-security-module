@@ -1,17 +1,27 @@
-const { DatabaseManager } = require("./../security-module/DatabaseManager");
+const { DatabaseManager } = require("./DatabaseManager");
+const { PermissionResolver } = require("./permissionResolver/PermissionResolver");
+const { QueryDisassembler } = require("./QueryDisassembler");
+const { QueryBuilder } = require("./Query-Builder/QueryBuilder")
 
 let role = null;
 const before = (fn, args) => {
     return function() {
         // here code will execute before 'prepareQuery' function
 
-        const queryStr = `${arguments[0]} WHERE ID=1`;
+        // user query
+        let queryStr = `${arguments[0]}`;
 
-        // queryStr += checkSomething1();
-        // queryStr += checkSomething2();
-        // queryStr += checkSomething3();
+        // query information
+        let queryDisassembler = new QueryDisassembler(queryStr);
 
-        return fn.call(this, queryStr);
+        // resolving permissions
+        let permissions = PermissionResolver(role, queryDisassembler.getType());
+
+        // modifying query
+        let queryBuilder = new QueryBuilder(queryStr);
+        for(let perm of permissions) {queryBuilder.withPermission(perm[1], perm[0]);}
+
+        return fn.call(this, queryBuilder.build());
     };
 };
 
@@ -39,3 +49,6 @@ function getRole()
 }
 
 module.exports = { prepareQuery, DatabaseManager, securityInit, setRole, getRole };
+
+setRole("admin");
+prepareQuery("select * from roles");

@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const { prepareQuery, DatabaseManager, securityInit} = require("./../security-module/SecurityModule");
+const { prepareQuery, DatabaseManager, securityInit, setRole} = require("./../security-module/SecurityModule");
 
 const port = process.env.PORT || 3000;
 
@@ -23,6 +23,7 @@ securityInit({
 app.get("/something", (req, res, next) => {
   const con = DatabaseManager.getInstance().getConnection();
 
+  setRole("admin");
   const response = con.query(prepareQuery("select * from roles"));
   console.log(response);
   res.send(response);
