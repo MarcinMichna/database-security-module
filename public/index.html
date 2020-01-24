@@ -13,56 +13,6 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" type="image/x-icon" href="images/ogor.jpg" />
 
-    <style>
-      html {
-        overflow-y: scroll;
-      }
-      table,
-      th,
-      td {
-        /* border-radius: 5px; */
-        /* width: 50%; */
-        margin: 0px auto;
-        float: none;
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 5px;
-        text-align: left;
-      }
-      .loader {
-        border: 16px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 16px solid #5bc0de;
-        width: 120px;
-        height: 120px;
-        margin: 0px auto;
-        -webkit-animation: spin 2s linear infinite; /* Safari */
-        animation: spin 2s linear infinite;
-      }
-
-      /* Safari */
-      @-webkit-keyframes spin {
-        0% {
-          -webkit-transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-        }
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-
     <title>Ogorkowa</title>
   </head>
   <body>
@@ -131,30 +81,52 @@
           <!--          </select>-->
           <br />
           <label class="font-weight-bold">Role</label>
-          <div id="radio-wrapper">
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="admin"
-                name="groupOfDefaultRadios"
-                value="admin"
-              />
-              <label class="custom-control-label" for="admin">admin</label>
+          <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+              <div id="radio-wrapper">
+                <div class="custom-control custom-radio">
+                  <input
+                    type="radio"
+                    class="custom-control-input"
+                    id="admin"
+                    name="groupOfDefaultRadios"
+                    value="admin"
+                  />
+                  <label class="custom-control-label" for="admin">admin</label>
+                </div>
+              </div>
             </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="moderatorL1"
-                name="groupOfDefaultRadios"
-                value="moderatorL1"
-              />
-              <label class="custom-control-label" for="moderatorL1"
-                >moderatorL1</label
-              >
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="moderatorL1"
+                  name="groupOfDefaultRadios"
+                  value="moderatorL1"
+                />
+                <label class="custom-control-label" for="moderatorL1"
+                  >moderatorL1</label
+                >
+              </div>
             </div>
-            <!-- <div class="custom-control custom-radio">
+            <div class="col-10 col-md-6">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="userL1"
+                  name="groupOfDefaultRadios"
+                  value="userL1"
+                />
+                <label class="custom-control-label" for="userL1">userL1</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="custom-control custom-radio">
               <input
                 type="radio"
                 class="custom-control-input"
@@ -166,74 +138,77 @@
                 >moderatorL2</label
               >
             </div> -->
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="moderatorL21"
-                name="groupOfDefaultRadios"
-                value="moderatorL21"
-              />
-              <label class="custom-control-label" for="moderatorL21"
-                >moderatorL21</label
-              >
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-2">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="moderatorL21"
+                  name="groupOfDefaultRadios"
+                  value="moderatorL21"
+                />
+                <label class="custom-control-label" for="moderatorL21"
+                  >moderatorL21</label
+                >
+              </div>
             </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="moderatatorL22"
-                name="groupOfDefaultRadios"
-                value="moderatorL22"
-                checked
-              />
-              <label class="custom-control-label" for="moderatatorL22"
-                >moderatorL22</label
-              >
+            <div class="col-12 col-md-4">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="moderatatorL22"
+                  name="groupOfDefaultRadios"
+                  value="moderatorL22"
+                  checked
+                />
+                <label class="custom-control-label" for="moderatatorL22"
+                  >moderatorL22</label
+                >
+              </div>
             </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="moderatorL31"
-                name="groupOfDefaultRadios"
-                value="moderatorL31"
-              />
-              <label class="custom-control-label" for="moderatorL31"
-                >moderatorL31</label
-              >
+            <div class="col-12 col-md-4">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="userL2"
+                  name="groupOfDefaultRadios"
+                  value="userL2"
+                />
+                <label class="custom-control-label" for="userL2">userL2</label>
+              </div>
             </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="moderatorL32"
-                name="groupOfDefaultRadios"
-                value="moderatorL32"
-              />
-              <label class="custom-control-label" for="moderatorL32"
-                >moderatorL32</label
-              >
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-10 col-md-1">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="moderatorL31"
+                  name="groupOfDefaultRadios"
+                  value="moderatorL31"
+                />
+                <label class="custom-control-label" for="moderatorL31"
+                  >moderatorL31</label
+                >
+              </div>
             </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="userL1"
-                name="groupOfDefaultRadios"
-                value="userL1"
-              />
-              <label class="custom-control-label" for="userL1">userL1</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                class="custom-control-input"
-                id="userL2"
-                name="groupOfDefaultRadios"
-                value="userL2"
-              />
-              <label class="custom-control-label" for="userL2">userL2</label>
+            <div class="col-10 col-md-4">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="moderatorL32"
+                  name="groupOfDefaultRadios"
+                  value="moderatorL32"
+                />
+                <label class="custom-control-label" for="moderatorL32"
+                  >moderatorL32</label
+                >
+              </div>
             </div>
           </div>
 

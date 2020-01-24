@@ -9,3 +9,54 @@ body {
   min-height: 200px;
   align-items: center;
 }
+
+html {
+  overflow-y: scroll;
+}
+table,
+th,
+td {
+  /* border-radius: 5px; */
+  /* width: 50%; */
+  margin: 0px auto;
+  float: none;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 5px;
+  text-align: left;
+}
+.row {
+  margin-top: 1rem;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #5bc0de;
+  width: 120px;
+  height: 120px;
+  margin: 0px auto;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
