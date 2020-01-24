@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 
 const {
   sendQuery,
-  DatabaseManager,
   securityInit,
   setRole
 } = require("./../security-module/SecurityModule");
