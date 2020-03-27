@@ -1,9 +1,9 @@
 
-<p align="center">
+<h1>
   Implementacja modułu bezpieczeństwa
 dostępu do danych na poziomie encji w
 zależności od przypisanej roli użytkownika.
-</p>
+</h1>
 
 Moduł bezpieczeństwa ma za zadanie zabezpieczyć dostęp do danych w tabelach przed użytkownikami którzy nie mają uprawnień dostępu.
 Aby przygotować moduł do działania wywołać trzeba metodę inicjalizującą,
